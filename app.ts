@@ -1,29 +1,25 @@
-import { App, Gdk } from "astal/gtk3";
-import style from "./style.scss";
-import Bar from "./widget/Bar";
-import { GLib } from "astal";
+import app from "ags/gtk4/app"
+import style from "./style.scss"
+import Bar from "./widget/Bar"
+import { interval } from "ags/time"
 
-App.start({
+app.start({
   css: style,
   icons: "icons",
-  main() {},
-});
+  main() {
+    checkMonitors()
+    interval(10000, () => checkMonitors())
+  },
+})
 
-let knownMonitors = new Set();
+let knownMonitors = new Set()
 
 function checkMonitors() {
-  const currentMonitors = App.get_monitors();
+  const currentMonitors = app.get_monitors()
   currentMonitors.forEach((monitor) => {
     if (!knownMonitors.has(monitor.model)) {
-      knownMonitors.add(monitor.model);
-      Bar(monitor);
+      knownMonitors.add(monitor.model)
+      Bar(monitor)
     }
-  });
+  })
 }
-
-checkMonitors();
-
-GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, 10, () => {
-  checkMonitors();
-  return true;
-});
