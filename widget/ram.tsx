@@ -1,16 +1,13 @@
-import { bind, GLib, Variable } from "astal"
 import { get_ram_info } from "./cpu"
-
-let info = Variable(get_ram_info())
-GLib.timeout_add(GLib.PRIORITY_DEFAULT, 1000, () => {
-  info.set(get_ram_info())
-
-  return true
-})
+import { createPoll } from "ags/time"
 
 export default function Ram() {
-  return <box className="status-box">
-    <label label={bind(info).as((i) => `${Math.round((i.used / i.total) * 100)}% `)} />
-  </box>
+  const info = createPoll(get_ram_info(), 1000, () => get_ram_info())
+
+  return (
+    <box class="status-box mem">
+      <label label={info.as(i => `Mem: ${Math.round((i.used / i.total) * 100)}% `)} />
+    </box>
+  )
 }
 

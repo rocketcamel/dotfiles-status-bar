@@ -1,18 +1,21 @@
-import { bind, Variable } from "astal"
 import AstalWp from "gi://AstalWp?version=0.1"
+import { createBinding, createMemo } from "gnim"
 
 export default function Audio() {
   const speaker = AstalWp.get_default()?.default_speaker!
-  // const derived = Variable.derive([bind(speaker, "volume"), bind(speaker, "mute")], (volume: number, muted: boolean) => {
-  //   if (muted) {
-  //     return { label: ` (muted)`, muted }
-  //   }
-  //   return { label: `${Math.floor(volume * 100)}% ` }
-  // })
+  const display = createMemo(() => {
+    const volume = createBinding(speaker, "volume")
+    const muted = createBinding(speaker, "mute")
 
-  // return <box className={derived((v) => ["status-box", v.muted && "inactive"].filter(Boolean).join(" "))}>
-  //   <label
-  //     label={derived((v) => v.label)} />
-  // </box>
+    if (muted()) {
+      return "(muted)"
+    }
+    return `${Math.floor(volume() * 100)}% `
+  })
 
+  return (
+    <box class="status-box audio">
+      <label label={display} />
+    </box>
+  )
 }

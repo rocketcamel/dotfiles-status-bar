@@ -1,7 +1,7 @@
 @use "sass:color";
 
-$bg: #212223;
-$fg: #f1f1f1;
+$bg: #1a1b26;
+$fg: #a9b1d6;
 $accent: #378DF7;
 $accent-white: #ffffff;
 $radius: 7px;
@@ -12,7 +12,8 @@ window.Bar {
   border: none;
   box-shadow: none;
   font-family: Dejavu Sans Mono;
-  background-color: color.adjust($bg, $alpha: -0.2);
+  // background-color: color.adjust($bg, $alpha: -0.2);
+  background-color: $bg;
   color: $fg;
   font-size: 1.1em;
 
@@ -21,10 +22,56 @@ window.Bar {
   }
 
   .status-box {
-    background-color: $bg-color-6;
-    padding: 0 4px;
-    margin: 0 2px;
+    // background-color: $bg-color-6;
+    // padding: 0 4px;
+    margin: 0 4px;
     font-size: 16px;
+  }
+
+  .disk {
+    color: #e0af68;
+    border-bottom: 4px solid #e0af68;
+  }
+
+  .mem {
+    color: #bb9af7;
+    border-bottom: 4px solid #bb9af7;
+  }
+
+  .cpu {
+    color: #9ece6a;
+    border-bottom: 4px solid #9ece6a;
+  }
+
+  .net {
+    color: #7aa2f7;
+    border-bottom: 4px solid #7aa2f7;
+  }
+
+  .audio {
+    color: #2ac3de;
+    border-bottom: 4px solid #2ac3de;
+  }
+
+  .date-popover {
+    all: unset;
+
+    color: #73daca;
+    border-bottom: 4px solid #73daca;
+
+    &>* {
+      all: unset;
+      border: none;
+      box-shadow: none;
+      background: transparent;
+    }
+  }
+
+  .separator {
+    background-color: #444b6a;
+    min-width: 2px;
+    min-height: 1px;
+    margin: 8px 0;
   }
 
   .inactive {

@@ -77,7 +77,6 @@
           mkdir -p $out/bin
           mkdir -p $out/share
           cp -r * $out/share
-          jj
           ags bundle app.ts $out/bin/${pname} -d "SRC='$out/share'"
         '';
       };
